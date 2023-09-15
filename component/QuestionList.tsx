@@ -1,24 +1,29 @@
-import React from "react";
-import QuestionOutput from "./QuestionOutput";
-
-import {
-  FlatList,
-  StyleSheet,
-  Linking,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState } from "react";
+import { FlatList, Linking, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
-  data: string;
-  id: number;
+  data: Array<object>;
 };
 
-const QuestionList = ({ data }) => {
+const QuestionList: React.FC<Props> = ({ data }) => {
+  const [page, setPage] = useState(1); // Initialize page state
+  const [loading, setLoading] = useState(false); // Track loading state
+
   const handleCardPress = (link) => {
-    console.log(link);
     Linking.openURL(link);
+  };
+
+  const loadMoreData = () => {
+    if (!loading) {
+      // Prevent multiple calls while loading
+      setLoading(true);
+
+      // Simulate loading new data (replace this with your actual data fetching logic)
+      setTimeout(() => {
+        setPage(page + 1);
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -35,6 +40,8 @@ const QuestionList = ({ data }) => {
           </View>
         </TouchableOpacity>
       )}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.1}
     />
   );
 };
@@ -45,8 +52,8 @@ const styles = {
     marginHorizontal: 20,
     borderRadius: 8,
     backgroundColor: "#FFFFFF",
-    elevation: 2, // Add shadow on Android
-    shadowColor: "rgba(0, 0, 0, 0.2)", // Add shadow on iOS
+    elevation: 2,
+    shadowColor: "rgba(0, 0, 0, 0.2)",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 2,
