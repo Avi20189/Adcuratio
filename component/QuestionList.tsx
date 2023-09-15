@@ -6,8 +6,8 @@ type Props = {
 };
 
 const QuestionList: React.FC<Props> = ({ data }) => {
-  const [page, setPage] = useState(1); // Initialize page state
-  const [loading, setLoading] = useState(false); // Track loading state
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const handleCardPress = (link) => {
     Linking.openURL(link);
@@ -15,10 +15,8 @@ const QuestionList: React.FC<Props> = ({ data }) => {
 
   const loadMoreData = () => {
     if (!loading) {
-      // Prevent multiple calls while loading
       setLoading(true);
 
-      // Simulate loading new data (replace this with your actual data fetching logic)
       setTimeout(() => {
         setPage(page + 1);
         setLoading(false);
