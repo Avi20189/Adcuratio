@@ -23,11 +23,8 @@ const useFetch = ({ endpoint, query }: Props) => {
     try {
       const response = await axios.request(options);
       setData(response);
-      // console.log(JSON.stringify(response));
     } catch (err) {
       setError(err);
-
-      // console.log(JSON.stringify(err));
     } finally {
       setIsLoading(false);
     }
